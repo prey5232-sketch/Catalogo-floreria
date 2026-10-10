@@ -1,0 +1,527 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mi Florería | Catálogo</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #fff8fa;
+  color: #492532;
+}
+
+header {
+  background: #963451;
+  color: white;
+  text-align: center;
+  padding: 28px 15px;
+}
+
+header h1 {
+  font-size: 30px;
+  margin: 0 0 8px;
+}
+
+header p {
+  margin: 0;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 22px;
+  padding: 15px 8px;
+  background: #f5e2e8;
+}
+
+nav a {
+  color: #852a49;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px 14px;
+}
+
+h2 {
+  text-align: center;
+}
+
+.intro {
+  text-align: center;
+  color: #80616d;
+  line-height: 1.5;
+}
+
+.categorias {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 25px 0;
+}
+
+.categoria {
+  min-height: 65px;
+  padding: 13px 8px;
+  border: 1px solid #ead0d9;
+  background: white;
+  border-radius: 12px;
+  color: #85314e;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.categoria:hover,
+.categoria.activa {
+  background: #a83c60;
+  color: white;
+}
+
+#titulo {
+  margin-top: 30px;
+  scroll-margin-top: 15px;
+}
+
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+  margin-top: 20px;
+}
+
+.tarjeta {
+  overflow: hidden;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 3px 10px #6a243018;
+}
+
+.tarjeta img {
+  display: block;
+  width: 100%;
+  height: 165px;
+  object-fit: cover;
+  background: #f5e2e8;
+}
+
+.tarjeta h3 {
+  font-size: 15px;
+  line-height: 1.4;
+  padding: 0 10px;
+  margin: 12px 0;
+}
+
+.pedir {
+  display: block;
+  width: calc(100% - 20px);
+  margin: 10px;
+  padding: 11px 8px;
+  border: none;
+  border-radius: 8px;
+  background: #963451;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.pedir:hover {
+  background: #76243e;
+}
+
+.volver {
+  grid-column: 1 / -1;
+  width: auto;
+  margin: 0 0 8px;
+}
+
+#vacio {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 25px 10px;
+  color: #80616d;
+  background: white;
+  border-radius: 12px;
+  line-height: 1.6;
+}
+
+#contacto {
+  margin: 35px 0 20px;
+  padding: 28px 16px;
+  text-align: center;
+  background: #f5e0e7;
+  border-radius: 14px;
+}
+
+#contacto p {
+  line-height: 1.5;
+}
+
+#contacto .pedir {
+  max-width: 300px;
+  margin: 18px auto 0;
+  font-size: 16px;
+}
+
+footer {
+  background: #8e2d4d;
+  color: white;
+  padding: 22px 12px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+@media (min-width: 650px) {
+  main {
+    padding: 30px 22px;
+  }
+
+  .categorias {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .galeria {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .tarjeta img {
+    height: 230px;
+  }
+}
+
+@media (min-width: 950px) {
+  .categorias {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .galeria {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header id="inicio">
+  <h1>🌹 Mi Florería 🌹</h1>
+  <p>Flores para cada momento especial</p>
+</header>
+
+<nav>
+  <a href="#inicio" onclick="mostrarCategorias()">Inicio</a>
+  <a href="#catalogo" onclick="mostrarCategorias()">Catálogo</a>
+  <a href="#contacto">Contacto</a>
+</nav>
+
+<main>
+
+  <section id="catalogo">
+    <h2>Encuentra las flores ideales 💐</h2>
+
+    <p class="intro">
+      Selecciona una categoría y descubre nuestros arreglos.
+    </p>
+
+    <div class="categorias" id="categorias"></div>
+
+    <h2 id="titulo">Nuestras categorías</h2>
+
+    <p class="intro" id="descripcion">
+      Elige una opción para ver las fotografías.
+    </p>
+
+    <div class="galeria" id="galeria" hidden></div>
+  </section>
+
+  <section id="contacto">
+    <h2>¿Buscas un arreglo especial?</h2>
+
+    <p>
+      Contáctanos para consultar diseños,
+      disponibilidad y precios actualizados.
+    </p>
+
+    <button class="pedir" onclick="contactar()">
+      Consultar por WhatsApp
+    </button>
+  </section>
+
+</main>
+
+<footer>
+  <h3>🌸 Mi Florería</h3>
+  <p>Gracias por elegirnos para tus momentos especiales.</p>
+  <p>© 2026 Mi Florería. Todos los derechos reservados.</p>
+</footer>
+
+<script>
+
+// 1. CATEGORÍAS DEL CATÁLOGO
+
+const categorias = [
+  "Amor y aniversarios",
+  "Cumpleaños",
+  "Día de las Madres",
+  "Graduaciones",
+  "Condolencias y funerales",
+  "Rosas",
+  "Girasoles",
+  "Gerberas",
+  "Lirios",
+  "Flores mixtas",
+  "Arreglos especiales"
+];
+
+// 2. TUS ARREGLOS
+// Las fotografías son ejemplos de rutas locales.
+// Sustitúyelas por los nombres de tus propias imágenes.
+
+const arreglos = [
+  {
+    nombre: "Ramo romántico",
+    categoria: "Amor y aniversarios",
+    imagen: "imagenes/amor1.jpg"
+  },
+  {
+    nombre: "Ramo de aniversario",
+    categoria: "Amor y aniversarios",
+    imagen: "imagenes/amor2.jpg"
+  },
+  {
+    nombre: "Ramo de cumpleaños",
+    categoria: "Cumpleaños",
+    imagen: "imagenes/cumpleanos1.jpg"
+  },
+  {
+    nombre: "Detalle para mamá",
+    categoria: "Día de las Madres",
+    imagen: "imagenes/madres1.jpg"
+  },
+  {
+    nombre: "Ramo de graduación",
+    categoria: "Graduaciones",
+    imagen: "imagenes/graduacion1.jpg"
+  },
+  {
+    nombre: "Arreglo de condolencias",
+    categoria: "Condolencias y funerales",
+    imagen: "imagenes/condolencias1.jpg"
+  },
+  {
+    nombre: "Rosas rojas",
+    categoria: "Rosas",
+    imagen: "imagenes/rosas1.jpg"
+  },
+  {
+    nombre: "Ramo de rosas elegante",
+    categoria: "Rosas",
+    imagen: "imagenes/rosas2.jpg"
+  },
+  {
+    nombre: "Ramo de girasoles",
+    categoria: "Girasoles",
+    imagen: "imagenes/girasoles1.jpg"
+  },
+  {
+    nombre: "Gerberas de colores",
+    categoria: "Gerberas",
+    imagen: "imagenes/gerberas1.jpg"
+  },
+  {
+    nombre: "Ramo de lirios",
+    categoria: "Lirios",
+    imagen: "imagenes/lirios1.jpg"
+  },
+  {
+    nombre: "Ramo de flores variadas",
+    categoria: "Flores mixtas",
+    imagen: "imagenes/mixtas1.jpg"
+  },
+  {
+    nombre: "Arreglo especial",
+    categoria: "Arreglos especiales",
+    imagen: "imagenes/especiales1.jpg"
+  }
+];
+
+// 3. CONFIGURA TU WHATSAPP AQUÍ
+// Escribe tu número con código de país, sin + ni espacios.
+// Ejemplo ficticio: 525512345678
+
+const telefono = "525571994934";
+
+// 4. ELEMENTOS DE LA PÁGINA
+
+const contenedorCategorias =
+  document.getElementById("categorias");
+
+const galeria =
+  document.getElementById("galeria");
+
+const titulo =
+  document.getElementById("titulo");
+
+const descripcion =
+  document.getElementById("descripcion");
+
+// 5. CREAR LOS BOTONES DE CATEGORÍAS
+
+function crearCategorias() {
+  contenedorCategorias.innerHTML = "";
+
+  categorias.forEach(categoria => {
+    const boton = document.createElement("button");
+
+    boton.className = "categoria";
+    boton.textContent = categoria;
+
+    boton.onclick = () => {
+      mostrarGaleria(categoria, boton);
+    };
+
+    contenedorCategorias.appendChild(boton);
+  });
+}
+
+// 6. MOSTRAR LAS FOTOS DE UNA CATEGORÍA
+
+function mostrarGaleria(categoria, botonActivo) {
+  contenedorCategorias.hidden = true;
+  galeria.hidden = false;
+
+  titulo.textContent = categoria;
+
+  descripcion.textContent =
+    "Estos son nuestros arreglos de " +
+    categoria.toLowerCase() + ".";
+
+  galeria.innerHTML = "";
+
+  // Botón para regresar a todas las categorías
+
+  const volver = document.createElement("button");
+
+  volver.className = "pedir volver";
+  volver.textContent = "← Volver a categorías";
+  volver.onclick = mostrarCategorias;
+
+  galeria.appendChild(volver);
+
+  // Buscar los arreglos que pertenecen a esta categoría
+
+  const seleccionados = arreglos.filter(arreglo =>
+    arreglo.categoria === categoria
+  );
+
+  // Si aún no has agregado fotografías
+
+  if (seleccionados.length === 0) {
+    const mensaje = document.createElement("p");
+
+    mensaje.id = "vacio";
+    mensaje.textContent =
+      "Próximamente agregaremos fotos de esta categoría.";
+
+    galeria.appendChild(mensaje);
+    return;
+  }
+
+  // Crear una tarjeta por cada arreglo
+
+  seleccionados.forEach(arreglo => {
+    const tarjeta = document.createElement("article");
+    tarjeta.className = "tarjeta";
+
+    const imagen = document.createElement("img");
+    imagen.src = arreglo.imagen;
+    imagen.alt = arreglo.nombre;
+    imagen.loading = "lazy";
+
+    imagen.onerror = () => {
+      imagen.alt = "Agrega tu fotografía a la carpeta imagenes";
+      imagen.style.display = "none";
+    };
+
+    const nombre = document.createElement("h3");
+    nombre.textContent = arreglo.nombre;
+
+    tarjeta.appendChild(imagen);
+    tarjeta.appendChild(nombre);
+
+    galeria.appendChild(tarjeta);
+  });
+
+  titulo.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}
+
+// 7. VOLVER A LA PANTALLA DE CATEGORÍAS
+
+function mostrarCategorias() {
+  contenedorCategorias.hidden = false;
+  galeria.hidden = true;
+
+  titulo.textContent = "Nuestras categorías";
+
+  descripcion.textContent =
+    "Elige una opción para ver las fotografías.";
+
+  document.querySelectorAll(".categoria").forEach(boton => {
+    boton.classList.remove("activa");
+  });
+}
+
+// 8. ABRIR EL CHAT DE WHATSAPP
+
+function contactar() {
+  const numero = telefono.replace(/\D/g, "");
+
+  if (!numero || numero.includes("TUNUMERO")) {
+    alert(
+      "Primero escribe tu número de WhatsApp " +
+      "en la variable telefono del código."
+    );
+    return;
+  }
+
+  const mensaje =
+    "Hola, vi su catálogo de flores y quisiera " +
+    "información sobre sus arreglos, disponibilidad y precios.";
+
+  const url =
+    "https://wa.me/" + numero +
+    "?text=" + encodeURIComponent(mensaje);
+
+  window.open(url, "_blank");
+}
+
+// INICIAR EL CATÁLOGO
+
+crearCategorias();
+
+</script>
+
+</body>
+</html>
